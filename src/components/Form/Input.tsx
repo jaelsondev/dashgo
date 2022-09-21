@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormControlProps,
   FormErrorMessage,
   FormLabel,
   Input as ChakraInput,
@@ -12,15 +13,20 @@ interface InputProps extends ChakraInputProps {
   name: string;
   label?: string;
   error?: FieldError;
+  formControlProps?: FormControlProps;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, label, error = null, ...rest },
+  { name, label, error = null, isDisabled, formControlProps = {}, ...rest },
   ref
 ) => {
   return (
-    <FormControl isInvalid={!!error}>
-      {!!label && <FormLabel htmlFor={name}>Senha</FormLabel>}
+    <FormControl
+      isInvalid={!!error}
+      isDisabled={isDisabled}
+      {...formControlProps}
+    >
+      {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
       <ChakraInput
         id={name}
         name={name}
